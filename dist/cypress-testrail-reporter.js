@@ -24,7 +24,6 @@ var CypressTestRailReporter = /** @class */ (function (_super) {
     __extends(CypressTestRailReporter, _super);
     function CypressTestRailReporter(runner, options) {
         var _this = _super.call(this, runner) || this;
-        _this.result = [];
         var reporterOptions = options.reporterOptions;
         if (process.env.CYPRESS_TESTRAIL_REPORTER_PASSWORD) {
             reporterOptions.password = process.env.CYPRESS_TESTRAIL_REPORTER_PASSWORD;
@@ -40,15 +39,12 @@ var CypressTestRailReporter = /** @class */ (function (_super) {
             if (caseIds.length > 0) {
                 // For each item in caseIds, create a new result object
                 for (var i = 0; i < caseIds.length; i++) {
-                    var result = caseIds.map(function (caseId) {
-                        // Return a new result object
-                        return {
-                            case_id: caseId,
-                            status_id: testrail_interface_1.Status.Passed,
-                            comment: "Execution time: ".concat(test.duration, "ms"),
-                            elapsed: "".concat(test.duration / 1000, "s")
-                        };
-                    });
+                    var result = [];
+                    result[1] = {
+                        case_id: caseIds[i],
+                        status_id: testrail_interface_1.Status.Passed,
+                        comment: "Execution time: ".concat(test.duration, "ms")
+                    };
                     _this.testRail.publishResults(result);
                 }
             }
@@ -58,21 +54,19 @@ var CypressTestRailReporter = /** @class */ (function (_super) {
             if (caseIds.length > 0) {
                 // For each item in caseIds, create a new result object
                 for (var i = 0; i < caseIds.length; i++) {
-                    var result = caseIds.map(function (caseId) {
-                        // Return a new result object
-                        return {
-                            case_id: caseId,
-                            status_id: testrail_interface_1.Status.Failed,
-                            comment: "".concat(test.err.message)
-                        };
-                    });
+                    var result = [];
+                    result[1] = {
+                        case_id: caseIds[i],
+                        status_id: testrail_interface_1.Status.Failed,
+                        comment: "".concat(test.err.message)
+                    };
                     _this.testRail.publishResults(result);
                 }
             }
         });
         runner.on('end', function () {
             // publish test cases results & close the run
-            _this.testRail.publishResults(_this.result);
+            // Do Nothing, all results should already be published
         });
         return _this;
     }
