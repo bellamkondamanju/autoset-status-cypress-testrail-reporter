@@ -34,7 +34,7 @@ export class CypressTestRailReporter extends reporters.Spec {
             elapsed: `${test.duration/1000}s`
           };
         });
-        this.results.push(...results);
+        this.testRail.publishResults(this.results)
       }
     });
 
@@ -48,7 +48,7 @@ export class CypressTestRailReporter extends reporters.Spec {
             comment: `${test.err.message}`,
           };
         });
-        this.results.push(...results);
+        this.testRail.publishResults(this.results)
       }
     });
 
