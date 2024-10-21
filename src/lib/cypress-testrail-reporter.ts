@@ -4,7 +4,7 @@ import { titleToCaseIds } from './shared';
 import { Status, TestRailResult } from './testrail.interface';
 
 export class CypressTestRailReporter extends reporters.Spec {
-  private results: TestRailResult[] = [];
+  private result: TestRailResult[] = [];
   private testRail: TestRail;
 
   constructor(runner: any, options: any) {
@@ -26,35 +26,48 @@ export class CypressTestRailReporter extends reporters.Spec {
     runner.on('pass', test => {
       const caseIds = titleToCaseIds(test.title);
       if (caseIds.length > 0) {
-        const results = caseIds.map(caseId => {
-          return {
-            case_id: caseId,
-            status_id: Status.Passed,
-            comment: `Execution time: ${test.duration}ms`,
-            elapsed: `${test.duration/1000}s`
-          };
-        });
-        this.testRail.publishResults(this.results)
+        
+        // For each item in caseIds, create a new result object
+        for (let i = 0; i < caseIds.length; i++) {
+          const result = caseIds.map(caseId => {
+
+            // Return a new result object
+            return {
+              case_id: caseId,
+              status_id: Status.Passed,
+              comment: `Execution time: ${test.duration}ms`,
+              elapsed: `${test.duration/1000}s`
+            };
+          }
+          );
+          this.testRail.publishResults(result)
+        }
       }
     });
 
     runner.on('fail', test => {
       const caseIds = titleToCaseIds(test.title);
       if (caseIds.length > 0) {
-        const results = caseIds.map(caseId => {
-          return {
-            case_id: caseId,
-            status_id: Status.Failed,
-            comment: `${test.err.message}`,
-          };
-        });
-        this.testRail.publishResults(this.results)
+        // For each item in caseIds, create a new result object
+        for (let i = 0; i < caseIds.length; i++) {
+          const result = caseIds.map(caseId => {
+
+            // Return a new result object
+            return {
+              case_id: caseId,
+              status_id: Status.Failed,
+              comment: `${test.err.message}`
+            };
+          }
+          );
+          this.testRail.publishResults(result)
+        }
       }
     });
 
     runner.on('end', () => {
       // publish test cases results & close the run
-      this.testRail.publishResults(this.results)
+      this.testRail.publishResults(this.result)
     });
   }
 
