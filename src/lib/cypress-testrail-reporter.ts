@@ -43,6 +43,7 @@ export class CypressTestRailReporter extends reporters.Spec {
       const caseIds = titleToCaseIds(test.title);
       if (caseIds.length > 0) {
         // For each item in caseIds, create a new result object
+        // Test
         for (let i = 0; i < caseIds.length; i++) {
           var result: TestRailResult[] = [];
           result[0] = {

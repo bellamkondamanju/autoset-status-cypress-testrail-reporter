@@ -53,6 +53,7 @@ var CypressTestRailReporter = /** @class */ (function (_super) {
             var caseIds = (0, shared_1.titleToCaseIds)(test.title);
             if (caseIds.length > 0) {
                 // For each item in caseIds, create a new result object
+                // Test
                 for (var i = 0; i < caseIds.length; i++) {
                     var result = [];
                     result[0] = {
