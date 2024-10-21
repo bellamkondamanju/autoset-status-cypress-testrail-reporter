@@ -40,7 +40,7 @@ var CypressTestRailReporter = /** @class */ (function (_super) {
                 // For each item in caseIds, create a new result object
                 for (var i = 0; i < caseIds.length; i++) {
                     var result = [];
-                    result[1] = {
+                    result[0] = {
                         case_id: caseIds[i],
                         status_id: testrail_interface_1.Status.Passed,
                         comment: "Execution time: ".concat(test.duration, "ms")
@@ -55,7 +55,7 @@ var CypressTestRailReporter = /** @class */ (function (_super) {
                 // For each item in caseIds, create a new result object
                 for (var i = 0; i < caseIds.length; i++) {
                     var result = [];
-                    result[1] = {
+                    result[0] = {
                         case_id: caseIds[i],
                         status_id: testrail_interface_1.Status.Failed,
                         comment: "".concat(test.err.message)

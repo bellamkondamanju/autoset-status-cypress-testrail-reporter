@@ -29,7 +29,7 @@ export class CypressTestRailReporter extends reporters.Spec {
         // For each item in caseIds, create a new result object
         for (let i = 0; i < caseIds.length; i++) {
           var result: TestRailResult[] = [];
-          result[1] = {
+          result[0] = {
               case_id: caseIds[i],
               status_id: Status.Passed,
               comment: `Execution time: ${test.duration}ms`
@@ -45,7 +45,7 @@ export class CypressTestRailReporter extends reporters.Spec {
         // For each item in caseIds, create a new result object
         for (let i = 0; i < caseIds.length; i++) {
           var result: TestRailResult[] = [];
-          result[1] = {
+          result[0] = {
               case_id: caseIds[i],
               status_id: Status.Failed,
               comment: `${test.err.message}`
